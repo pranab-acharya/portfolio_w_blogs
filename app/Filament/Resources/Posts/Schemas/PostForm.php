@@ -39,6 +39,8 @@ class PostForm
                     ->columnSpanFull()
                     ->required(),
                 FileUpload::make('image')
+                    ->disk('public')
+                    ->visibility('public')
                     ->directory('post_images')
                     ->columnSpanFull(),
                 Select::make('tags')

@@ -88,6 +88,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->databaseNotifications()
+            ->renderHook(
+                'panels::body.end',
+                fn() => view('livewire.comment-actions-script')
+            );
     }
 }
