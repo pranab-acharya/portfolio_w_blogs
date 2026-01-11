@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Posts\Schemas;
 
 use App\Enums\BlogStatus;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -21,11 +22,17 @@ class PostInfolist
                     ->label(fn($record) => $record->status === BlogStatus::PUBLISHED ? 'Published At' : 'Scheduled At')
                     ->visible(fn($record) => $record !== BlogStatus::DRAFT)
                     ->dateTime(),
+                ImageEntry::make('image')
+                    ->imageWidth(1500)
+                    ->imageHeight(500)
+                    ->disk('public')
+                    ->columnSpanFull(),
                 TextEntry::make('excerpt')
                     ->columnSpanFull(),
                 TextEntry::make('content')
                     ->columnSpanFull()
-                    ->html(),
+                    ->html()
+                    ->prose(),
             ]);
     }
 }

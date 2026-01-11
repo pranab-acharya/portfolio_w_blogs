@@ -31,7 +31,13 @@ class CommentsRelationManager extends RelationManager
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Select::make('parent_id')
-                    ->options(fn() => Comment::pluck('comment', 'id')->toArray()),
+                    ->label('Reply to Comment')
+                    ->options(fn($livewire) => $livewire->getOwnerRecord()->comments()
+                        ->whereNull('parent_id')
+                        ->pluck('comment', 'id')
+                        ->toArray())
+                    ->searchable()
+                    ->placeholder('Select a comment to reply to (optional)'),
                 Select::make('status')
                     ->options(CommentStatus::class)
                     ->default(CommentStatus::PENDING)
